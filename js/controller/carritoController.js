@@ -6,7 +6,9 @@ window.addEventListener("load", (e) => {
     actualizarCantidadCarrito();
     actualizarMontoVista();
 });
-
+/*
+    Se encarga de eliminar un elemento específico del carrito de compras.
+*/
 function eliminarElementCarrito(idPlatillo) {
     let carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     const carritoFiltrado = carrito.filter(elemento => elemento[0] !== idPlatillo);
@@ -16,6 +18,10 @@ function eliminarElementCarrito(idPlatillo) {
     listarCarrito();
 }
 
+/*
+    Se encarga de realizar una solicitud HTTP GET para obtener información
+    de un platillo específico utilizando su idPlatillo.
+*/
 async function platilloGet(idPlatillo) {
     const response_1 = await new Promise(function (resolve, reject) {
         fetch(`${dominio}/platillo/get/${idPlatillo}/`)
@@ -33,6 +39,9 @@ async function platilloGet(idPlatillo) {
     return response_1.json();
 }
 
+/*
+    Se encarga de buscar un elemento específico del carrito de compras.
+*/
 function buscarElementCarrito(nombreBuscar) {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let indice = 0;
@@ -46,6 +55,10 @@ function buscarElementCarrito(nombreBuscar) {
     return false;
 }
 
+/*
+    Se encarga de listar todos y cada uno de los productos que hayan sido
+    cargados al carrito de compras.
+*/
 async function listarCarrito() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let contenido = '';
@@ -72,6 +85,9 @@ async function listarCarrito() {
     actualizarMontoVista();
 }
 
+/*
+    Se encarga de obtener el monto total de los productos añadidos al carrito de compras.
+*/
 async function obtenerMontoTotal() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     const respuesta = await new Promise(function (resolve, reject) {
@@ -95,6 +111,11 @@ async function obtenerMontoTotal() {
     return respuesta.json();
 }
 
+/*
+    Se encarga de actualizar la vista del monto total en la interfaz de usuario, 
+    así como de mostrar u ocultar los botones de PayPal y la dirección de pedido 
+    en función del monto total.
+*/
 async function actualizarMontoVista() {
     const monto = await obtenerMontoTotal();
     $('#montoTotal').html('Monto total: S/' + monto["resultado"]);
@@ -102,6 +123,10 @@ async function actualizarMontoVista() {
     checkSession();
 }
 
+/*
+    Se encarga de actualizar la cantidad de elementos en el carrito de compras 
+    y mostrarlo en la interfaz de usuario
+*/
 function actualizarCantidadCarrito() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let cantidad = 0;
@@ -109,6 +134,10 @@ function actualizarCantidadCarrito() {
     $('#cantidadCarrito').html(cantidad);
 }
 
+/*
+    Se encarga de actualizar la cantidad de un platillo en el carrito de compras
+    cuando se hace clic en el botón correspondiente en la interfaz de usuario.
+*/
 function actualizarCarrito() {
     const btnsUpdateCarrito = document.querySelectorAll(".btnUpdateCarrito");
     const idPlatillos = document.querySelectorAll(".idPlatillo");

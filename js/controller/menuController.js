@@ -3,6 +3,10 @@ window.addEventListener('load', (e) => {
     platilloSel();
 });
 
+/*
+    Se encarga de obtener y mostrar los platillos de una categoría 
+    específica o de todas las categorías.
+*/
 function platilloSel(idCategoria = null) {
     const url = idCategoria === null ? `${dominio}/platillo/sel/` : `${dominio}/platillo/sel/${idCategoria}/`;
     $.ajax({
@@ -33,6 +37,10 @@ function platilloSel(idCategoria = null) {
     });
 }
 
+/*
+    Se encarga de obtener y mostrar las categorías de platillos 
+    disponibles en la interfaz de usuario.
+*/
 function categoriaSel() {
     $.ajax({
         type: "GET",
@@ -57,6 +65,10 @@ function categoriaSel() {
  * @param
  * @returns
  */
+/*
+    Se encarga de añadir platillos al carrito de compras cuando 
+    se hace clic en el botón correspondiente en la interfaz de usuario.
+*/
 function agregarPlatilloCarrito() {
     const btnsAgregarPlatillo = document.querySelectorAll('.btnAgregarPlatillo');
     const inputsCarrito = document.querySelectorAll('.inputCarrito');

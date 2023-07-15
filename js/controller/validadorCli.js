@@ -1,3 +1,7 @@
+/*
+    Se encarga de verificar si la sesión de un cliente es válida 
+    consultando en el servidor.
+*/
 function isSessionValid() {
     const token = sessionStorage.getItem("access_token");
     return new Promise((resolve, reject) => {
@@ -60,6 +64,10 @@ window.addEventListener("load", (e) => {
     checkSession();
 });
 
+/*
+    Se encarga de cerrar la sesión de un cliente cuando se hace clic 
+    en el botón correspondiente en la interfaz de usuario.
+*/
 function cerrarSesion() {
     if (window.location.pathname === "/index.html") {
 
@@ -72,6 +80,10 @@ function cerrarSesion() {
     }
 }
 
+/*
+    Se encarga de iniciar la sesión de un cliente cuando se hace clic 
+    en el botón correspondiente en la interfaz de usuario.
+*/
 function iniciarSesion() {
     if (window.location.pathname === "/index.html") {
         evaluarCampos();

@@ -1,7 +1,9 @@
 window.addEventListener("load", (e) => {
     botonesPaypal();
 });
-
+/*
+    Se encarga de configurar y mostrar los botones de PayPal en la interfaz de usuario.
+*/
 function botonesPaypal() {
     paypal
         .Buttons({

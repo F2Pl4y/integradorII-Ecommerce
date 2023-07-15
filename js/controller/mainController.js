@@ -25,6 +25,10 @@ window.addEventListener('load', (e) => {
     evaluarCampos();
 });
 
+/*
+    Se encarga de mostrar un ícono y aplicar estilos a un campo de entrada
+    (input) y su ícono asociado en función de un valor booleano.
+*/
 function inputCheck(icono, input, boolean) {
     if (boolean) {
         icono.classList.add("positivo");
@@ -41,6 +45,10 @@ function inputCheck(icono, input, boolean) {
     }
 }
 
+/*
+    Se encarga de mostrar un mensaje de validación utilizando 
+    la biblioteca SweetAlert.
+*/
 function mensajeValidacion(mensaje, validacion) {
     const config = {
         title: validacion ? 'Exito' : 'Error',
@@ -52,7 +60,10 @@ function mensajeValidacion(mensaje, validacion) {
     Swal.fire(config);
 }
 
-
+/*
+    Se encarga de mostrar una alerta pequeña en la esquina 
+    inferior derecha de la pantalla utilizando la biblioteca SweetAlert.
+*/
 function miniAlerta(icono, mensaje) {
     const Toast = Swal.mixin({
         toast: true,
@@ -72,6 +83,10 @@ function miniAlerta(icono, mensaje) {
     })
 }
 
+/*
+    Se encarga de evaluar y validar los campos de entrada del 
+    formulario del cliente en tiempo real.
+*/
 function evaluarCampos() {
     if (window.location.pathname === "/index.html") {
         const txtCorreoCliente = document.getElementById('txtCorreoCliente');
@@ -118,6 +133,10 @@ function evaluarCampos() {
     }
 }
 
+/*
+    Se encarga de limpiar y restablecer los valores y estilos
+    de los campos de entrada del formulario del cliente.
+*/
 function limpiarCampoFormulario() {
     $('#txtCorreoCliente').val('');
     $('#txtCorreoCliente').removeClass('positivo');

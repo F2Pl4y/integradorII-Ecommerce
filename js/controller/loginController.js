@@ -1,3 +1,7 @@
+/*
+    Se encarga de registrar un nuevo cliente cuando se hace clic en el botón 
+    correspondiente en la interfaz de usuario.
+*/
 function registrarLosClientes() {
     const btnRegistarCliente = document.getElementById('btnRegistarCliente');
     btnRegistarCliente.addEventListener('click', (e) => {
@@ -20,6 +24,10 @@ window.addEventListener('load', (e) => {
 
 
 // RECORDAR QUE ESTO DEBE IR EN UN JS APARTE
+/*
+    Se encarga de mostrar un ícono y aplicar estilos a un campo de entrada 
+    (input) y su ícono asociado en función de un valor booleano.
+*/
 function inputCheck(icono, input, boolean) {
     if (boolean) {
         icono.classList.add("positivo");
@@ -40,6 +48,10 @@ function inputCheck(icono, input, boolean) {
 // Fin de codigo de restricciones/Validaciones
 // Funcion Para Registrar Nuevos Clientes
 
+/*
+    se encarga de enviar una solicitud AJAX al servidor para registrar un
+    nuevo cliente con los datos ingresados en el formulario.
+*/
 function clienteIns() {
     const registrosclientes = new FormData();
     registrosclientes.append("txtCorreoCliente", $('#txtCorreoCliente').val());
