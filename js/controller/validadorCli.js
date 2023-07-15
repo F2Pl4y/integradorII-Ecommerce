@@ -8,7 +8,7 @@ function isSessionValid() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: `${window.dominio}/secureCli`,
+            url: `${window.dominio}secureCli`,
             dataType: "json",
             headers: {
                 Authorization: "Token " + token,
