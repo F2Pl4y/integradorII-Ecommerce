@@ -9,7 +9,7 @@ window.addEventListener('load', (e) => {
     específica o de todas las categorías.
 */
 function platilloSel(idCategoria = null) {
-    const url = idCategoria === null ? `${window.dominio}/platillo/sel/` : `${window.dominio}/platillo/sel/${idCategoria}/`;
+    const url = idCategoria === null ? `${window.dominio}platillo/sel/` : `${window.dominio}platillo/sel/${idCategoria}/`;
     $.ajax({
         type: "GET",
         url: url,
@@ -45,7 +45,7 @@ function platilloSel(idCategoria = null) {
 function categoriaSel() {
     $.ajax({
         type: "GET",
-        url: `${window.dominio}/categoria/sel/`,
+        url: `${window.dominio}categoria/sel/`,
         dataType: "json",
         success: function (data) {
             let contenido = '<li><button onclick="platilloSel()" class="btn">Todos</button></li>';
