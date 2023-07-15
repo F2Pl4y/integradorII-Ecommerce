@@ -1,4 +1,4 @@
-import { dominio } from './mainController';
+import { dominio } from './mainController.js';
 /*
     Se encarga de verificar si la sesión de un cliente es válida 
     consultando en el servidor.

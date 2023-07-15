@@ -1,6 +1,7 @@
+
+import { dominio } from './mainController.js';
 const ordenCarrito = 0;
 var montoTotal = 100;
-
 window.addEventListener("load", (e) => {
     listarCarrito();
     actualizarCantidadCarrito();

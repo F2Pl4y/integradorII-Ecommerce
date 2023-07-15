@@ -1,3 +1,4 @@
+import { dominio } from './mainController.js';
 document.addEventListener('DOMContentLoaded', function () {
     // Realizar la llamada AJAX
     isSessionValid()
