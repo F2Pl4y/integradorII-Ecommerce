@@ -1,4 +1,4 @@
-const dominio = 'http://127.0.0.1:5000/';
+export const dominio = 'http://127.0.0.1:5000/';
 
 const expresiones = {
     nombreCargo: /^[\w,\s]{5,30}$/,
