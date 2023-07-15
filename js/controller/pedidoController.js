@@ -1,4 +1,4 @@
-import { dominio } from './mainController.js';
+// import { dominio } from './mainController.js';
 window.addEventListener("load", (e) => {
     botonesPaypal();
 });

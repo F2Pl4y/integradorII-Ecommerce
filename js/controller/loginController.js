@@ -61,7 +61,7 @@ function clienteIns() {
     registrosclientes.append("txtTelefonoCliente", $('#txtTelefonoCliente').val());
     $.ajax({
         type: "POST",
-        url: `${dominio}cliente/ins/`,
+        url: `${window.dominio}cliente/ins/`,
         data: registrosclientes,
         dataType: "json",
         contentType: false,

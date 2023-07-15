@@ -1,5 +1,5 @@
 
-import { dominio } from './mainController.js';
+// import { dominio } from './mainController.js';
 const ordenCarrito = 0;
 var montoTotal = 100;
 window.addEventListener("load", (e) => {
@@ -25,7 +25,7 @@ function eliminarElementCarrito(idPlatillo) {
 */
 async function platilloGet(idPlatillo) {
     const response_1 = await new Promise(function (resolve, reject) {
-        fetch(`${dominio}/platillo/get/${idPlatillo}/`)
+        fetch(`${window.dominio}platillo/get/${idPlatillo}/`)
             .then(function (response) {
                 if (response.ok) {
                     resolve(response);
@@ -69,7 +69,7 @@ async function listarCarrito() {
         const cantidad = element[1];
         contenido += `<div class="box">`;
         contenido += `<button onclick="eliminarElementCarrito(${platillo.resultado.CodigoPlatillo})" class="fas fa-times"></button>`;
-        contenido += `<img src="${dominio}/platillo/foto/${platillo.resultado.CodigoPlatillo}/" alt="" />`;
+        contenido += `<img src="${window.dominio}/platillo/foto/${platillo.resultado.CodigoPlatillo}/" alt="" />`;
         contenido += `<div class="content">`;
         contenido += `<p>${platillo.resultado.NombrePlatillo}</span></p>`;
         contenido += `<form action="" method="post">`;
@@ -92,7 +92,7 @@ async function listarCarrito() {
 async function obtenerMontoTotal() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     const respuesta = await new Promise(function (resolve, reject) {
-        fetch(`${dominio}platillo/total/`, {
+        fetch(`${window.dominio}platillo/total/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

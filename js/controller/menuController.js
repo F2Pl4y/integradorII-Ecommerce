@@ -1,4 +1,4 @@
-import { dominio } from './mainController.js';
+// import { dominio } from './mainController.js';
 window.addEventListener('load', (e) => {
     categoriaSel();
     platilloSel();
@@ -9,7 +9,7 @@ window.addEventListener('load', (e) => {
     específica o de todas las categorías.
 */
 function platilloSel(idCategoria = null) {
-    const url = idCategoria === null ? `${dominio}/platillo/sel/` : `${dominio}/platillo/sel/${idCategoria}/`;
+    const url = idCategoria === null ? `${window.dominio}/platillo/sel/` : `${window.dominio}/platillo/sel/${idCategoria}/`;
     $.ajax({
         type: "GET",
         url: url,
@@ -21,7 +21,7 @@ function platilloSel(idCategoria = null) {
                 $.each(data["resultado"], function (llave, valor) {
                     let template = `<div class="box">`;
                     template += `<div class="price">S/<span>${valor["Precio"]}</span></div>`;
-                    template += `<img src="${dominio}/platillo/foto/${valor["CodigoPlatillo"]}/" alt="" />`;
+                    template += `<img src="${window.dominio}/platillo/foto/${valor["CodigoPlatillo"]}/" alt="" />`;
                     template += `<div class="name">${valor["NombrePlatillo"]}</div>`;
                     template += `<form action="" method="post">`;
                     template += `<input type="hidden" value="${valor["CodigoPlatillo"]}" min="1" max="100" value="1" class="qty inputCodigos" name="qty" />`;
@@ -45,7 +45,7 @@ function platilloSel(idCategoria = null) {
 function categoriaSel() {
     $.ajax({
         type: "GET",
-        url: `${dominio}/categoria/sel/`,
+        url: `${window.dominio}/categoria/sel/`,
         dataType: "json",
         success: function (data) {
             let contenido = '<li><button onclick="platilloSel()" class="btn">Todos</button></li>';

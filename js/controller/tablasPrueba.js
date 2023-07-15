@@ -1,11 +1,11 @@
-import { dominio } from './mainController.js';
+// import { dominio } from './mainController.js';
 document.addEventListener('DOMContentLoaded', function () {
     // Realizar la llamada AJAX
     isSessionValid()
         .then((resultado) => {
             $.ajax({
                 type: "GET",
-                url: `${dominio}valoresFactura/${resultado.resultado[0]}/`,
+                url: `${window.dominio}valoresFactura/${resultado.resultado[0]}/`,
                 dataType: "json",
                 success: function (response) {
                     // Verificar la respuesta y pintar las tablas
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 type: "GET",
                 // url: `${dominioV}PDF/sel/${resultado.resultado[4]}/`,
-                url: `${dominio}PDF/sel/${codPedido}/`,
+                url: `${window.dominio}PDF/sel/${codPedido}/`,
                 dataType: "json",
                 contentType: 'application/json',
                 success: function (response) {

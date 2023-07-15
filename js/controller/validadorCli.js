@@ -1,4 +1,4 @@
-import { dominio } from './mainController.js';
+// import { dominio } from './mainController.js';
 /*
     Se encarga de verificar si la sesión de un cliente es válida 
     consultando en el servidor.
@@ -8,7 +8,7 @@ function isSessionValid() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: `${dominio}/secureCli`,
+            url: `${window.dominio}/secureCli`,
             dataType: "json",
             headers: {
                 Authorization: "Token " + token,
@@ -95,7 +95,7 @@ function iniciarSesion() {
             var password = $("#txtPasswordClienteLog").val();
 
             $.ajax({
-                url: `${dominio}/cliente/loginCli/`,
+                url: `${window.dominio}/cliente/loginCli/`,
                 type: "POST",
                 dataType: "json",
                 contentType: "application/json",
