@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: gray;
+  background-image: url("https://cdn-icons-png.flaticon.com/512/4108/4108854.png");
+  background-size: 33.3vw;
+  backdrop-filter: blur(5px);
+  height: 100vh;
+}
+
+#contenedor-tablas {
+  min-width: calc(70%);
+  max-width: calc(70%);
+  height: 80vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  /* background-color: darkolivegreen; */
+}
+
+.section-hijo {
+  margin: 0 10px 5px 10px;
+  /* margin-bottom: 20px; */
+  min-width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  align-items: center;
+  text-align: center;
+}
+
+.tabla-expansible {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+}
+
+.tabla-expansible th,
+.tabla-expansible td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+  min-width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+}
+
+.oculto {
+  display: none;
+  min-width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+}
+
+.mostrar {
+  display: block;
+  min-width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  text-align: center !important;
+}
