@@ -35,6 +35,8 @@ function botonesPaypal() {
                                 localStorage.getItem("carrito") === null
                                     ? []
                                     : JSON.parse(localStorage.getItem("carrito"));
+                            console.log("MI CARRITO\n", carrito);
+                            console.log("MI CLIENTE\n", resultado["resultado"][0]);
                             const direccion = document.getElementById("inputDireccion").value;
                             const total = parseFloat(localStorage.getItem("montoTotal"));
                             $.ajax({
