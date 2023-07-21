@@ -10,7 +10,10 @@ function platilloSel(idCategoria = null) {
         url: url,
         dataType: "json",
         success: function (data) {
-            idCategoriaGlobal = idCategoria;
+            if (idcategoria != null) {
+                idcategoriaglobal = idcategoria
+            }
+            // idCategoriaGlobal = idCategoria;
             let contenido = '';
             if (data["exito"] === true) {
                 $.each(data["resultado"], function (llave, valor) {
