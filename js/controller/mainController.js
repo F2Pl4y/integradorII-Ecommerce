@@ -1,9 +1,8 @@
 // export const dominio = 'http://127.0.0.1:5000/';
 
 export function dominioFun() {
-    return 'http://127.0.0.1:5000/';
+    return 'http://38.25.17.172:5000/';
 }
-// export { dominio };
 const expresiones = {
     nombreCargo: /^[\w,\s]{5,30}$/,
     dinero: /^\d+(.(\d{1,2})?)?$/,
