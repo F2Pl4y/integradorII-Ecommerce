@@ -1,4 +1,3 @@
-import { buscarElementCarrito } from './carritoController.js';
 window.addEventListener('load', (e) => {
     categoriaSel();
     platilloSel();
@@ -10,9 +9,6 @@ function platilloSel(idCategoria = null) {
         url: url,
         dataType: "json",
         success: function (data) {
-            // if (idcategoria != null) {
-            //     idcategoriaglobal = idcategoria
-            // }
             let idCategoriaGlobal = idCategoria;
             let contenido = '';
             if (data["exito"] === true) {
@@ -92,3 +88,5 @@ function agregarPlatilloCarrito() {
     }
 }
 import { dominioFun } from './mainController.js';
+import { buscarElementCarrito } from './carritoController.js';
+

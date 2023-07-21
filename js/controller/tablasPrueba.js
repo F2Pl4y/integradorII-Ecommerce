@@ -1,6 +1,3 @@
-// const dominio = 'http://127.0.0.1:5000/';
-import { dominioFun } from './mainController.js';
-import { isSessionValid } from './validadorCli.js';
 document.addEventListener('DOMContentLoaded', function () {
     isSessionValid()
         .then((resultado) => {
@@ -418,5 +415,5 @@ document.addEventListener('DOMContentLoaded', function () {
     regresar();
 });
 
-
-// **************************
+import { dominioFun } from './mainController.js';
+import { isSessionValid } from './validadorCli.js';

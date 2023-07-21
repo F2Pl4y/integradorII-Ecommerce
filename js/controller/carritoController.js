@@ -1,9 +1,5 @@
-
 const ordenCarrito = 0;
 var montoTotal = 100;
-import { dominioFun } from './mainController.js';
-import { checkSession } from './validadorCli.js';
-
 window.addEventListener("load", (e) => {
     listarCarrito();
     actualizarCantidadCarrito();
@@ -131,3 +127,5 @@ function actualizarCarrito() {
         });
     }
 }
+import { dominioFun } from './mainController.js';
+import { checkSession } from './validadorCli.js';
