@@ -1,9 +1,11 @@
-function isSessionValid() {
+import { dominioFun } from './mainController.js';
+
+export function isSessionValid() {
     const token = sessionStorage.getItem("access_token");
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: `${dominio}/secureCli`,
+            url: `${dominioFun()}secureCli`,
             dataType: "json",
             headers: {
                 Authorization: "Token " + token,
@@ -19,30 +21,25 @@ function isSessionValid() {
 }
 
 // Función para verificar si el usuario ha iniciado sesión
-function checkSession() {
+export function checkSession() {
     let tokenC = sessionStorage.getItem("access_token");
     isSessionValid(tokenC)
         .then((resultado) => {
             const btnCuenta = document.getElementById('user-btn');
             const contenedorPaypalBotones = document.getElementById('paypal-button-container');
             const direccionPedido = document.getElementById('direccionPedido');
-            console.log(contenedorPaypalBotones);
-            console.log(direccionPedido);
-            console.log(resultado);
             if (resultado["exito"]) {
-                console.log("Entré exito");
                 btnCuenta.setAttribute("data-toggle", "modal");
                 btnCuenta.setAttribute("data-target", "#cuenta");
                 $('#nombreCliente').html(resultado["resultado"][3]);
                 $('#correoCliente').html(resultado["resultado"][1]);
                 $('#dniCliente').html(resultado["resultado"][2]);
                 $('#TelefonoCliente').html(resultado["resultado"][4]);
-                document.querySelector('#user-btn').onclick = () =>{}
+                document.querySelector('#user-btn').onclick = () => { }
                 contenedorPaypalBotones.style.display = localStorage.getItem("montoTotal") !== "0" ? "Block" : "None";
                 direccionPedido.style.display = localStorage.getItem("montoTotal") !== "0" ? "Block" : "None";
-            }else{
-                console.log("No Entré exito");
-                document.querySelector('#user-btn').onclick = () =>{
+            } else {
+                document.querySelector('#user-btn').onclick = () => {
                     account.classList.add('active');
                     $("#txtCorreoClienteLog").val('');
                     $("#txtPasswordClienteLog").val('');
@@ -52,10 +49,10 @@ function checkSession() {
                 contenedorPaypalBotones.style.display = "None";
                 direccionPedido.style.display = "None";
             }
-            
+
         })
         .catch((error) => {
-            
+
         });
 }
 
@@ -65,10 +62,10 @@ window.addEventListener("load", (e) => {
     checkSession();
 });
 
-function cerrarSesion(){
-    if(window.location.pathname === "/index.html"){
+function cerrarSesion() {
+    if (window.location.pathname === "/index.html") {
         const btnCerrarSesion = document.getElementById('btnCerrarSesion');
-        btnCerrarSesion.addEventListener('click', (e)=>{
+        btnCerrarSesion.addEventListener('click', (e) => {
             sessionStorage.removeItem("access_token");
             checkSession();
             $('#cuenta').modal('hide');
@@ -78,15 +75,15 @@ function cerrarSesion(){
 }
 
 function iniciarSesion() {
-    if(window.location.pathname === "/index.html"){
+    if (window.location.pathname === "/index.html") {
         const btnLogin = document.getElementById("btnLogin");
         btnLogin.addEventListener("click", (e) => {
             e.preventDefault();
             var correo = $("#txtCorreoClienteLog").val();
             var password = $("#txtPasswordClienteLog").val();
-    
+
             $.ajax({
-                url: `${dominio}/cliente/loginCli/`,
+                url: `${dominioFun()}cliente/loginCli/`,
                 type: "POST",
                 dataType: "json",
                 contentType: "application/json",
@@ -95,7 +92,6 @@ function iniciarSesion() {
                     PasswordCliente: password,
                 }),
                 success: function (response) {
-                    console.log(response);
                     if (response["estado"]) {
                         sessionStorage.setItem("access_token", response["mensaje"]);
                         checkSession();

@@ -1,5 +1,9 @@
-const dominio = 'http://127.0.0.1:5000/';
+// export const dominio = 'http://127.0.0.1:5000/';
 
+export function dominioFun() {
+    return 'http://127.0.0.1:5000/';
+}
+// export { dominio };
 const expresiones = {
     nombreCargo: /^[\w,\s]{5,30}$/,
     dinero: /^\d+(.(\d{1,2})?)?$/,
@@ -21,7 +25,7 @@ const evaluarClienteNuevo = {
     telefonoCliente: false
 }
 
-window.addEventListener('load', (e)=>{
+window.addEventListener('load', (e) => {
     evaluarCampos();
 });
 
@@ -53,67 +57,69 @@ function mensajeValidacion(mensaje, validacion) {
 }
 
 
-function miniAlerta(icono, mensaje){
+function miniAlerta(icono, mensaje) {
     const Toast = Swal.mixin({
-       toast: true,
-       position: 'bottom-end',
-       showConfirmButton: false,
-       timer: 3000,
-       timerProgressBar: true,
-       didOpen: (toast) => {
-         toast.addEventListener('mouseenter', Swal.stopTimer)
-         toast.addEventListener('mouseleave', Swal.resumeTimer)
-       }
-     })
-     
-     Toast.fire({
-       icon: icono,
-       title: mensaje
-     })
- }
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    Toast.fire({
+        icon: icono,
+        title: mensaje
+    })
+}
 
 function evaluarCampos() {
-    const txtCorreoCliente = document.getElementById('txtCorreoCliente');
-    const iconoCorreoCliente = document.querySelector('#txtCorreoCliente+.icono');
-    const txtDNI = document.getElementById('txtDNI');
-    const iconoDNI = document.querySelector('#txtDNI+.icono');
-    const txtNomCliente = document.getElementById('txtNomCliente');
-    const iconoNomCliente = document.querySelector('#txtNomCliente+.icono');
-    const txtPasswordCliente = document.getElementById('txtPasswordCliente');
-    const iconoPassword = document.querySelector('#txtPasswordCliente+.icono');
-    const txtTelefonoCliente = document.getElementById('txtTelefonoCliente');
-    const iconoTelefonoCliente = document.querySelector('#txtTelefonoCliente+.icono');
-   
+    if (window.location.pathname === "/index.html") {
+        const txtCorreoCliente = document.getElementById('txtCorreoCliente');
+        const iconoCorreoCliente = document.querySelector('#txtCorreoCliente+.icono');
+        const txtDNI = document.getElementById('txtDNI');
+        const iconoDNI = document.querySelector('#txtDNI+.icono');
+        const txtNomCliente = document.getElementById('txtNomCliente');
+        const iconoNomCliente = document.querySelector('#txtNomCliente+.icono');
+        const txtPasswordCliente = document.getElementById('txtPasswordCliente');
+        const iconoPassword = document.querySelector('#txtPasswordCliente+.icono');
+        const txtTelefonoCliente = document.getElementById('txtTelefonoCliente');
+        const iconoTelefonoCliente = document.querySelector('#txtTelefonoCliente+.icono');
 
-    txtCorreoCliente.addEventListener('keyup', (e) => {
-        const comprobarCorreo = expresiones["correo"].test(txtCorreoCliente.value);
-        evaluarClienteNuevo["CorreoCliente"] = comprobarCorreo;
-        inputCheck(iconoCorreoCliente, txtCorreoCliente, comprobarCorreo);
-    });
 
-    txtDNI.addEventListener('keyup', (e) => {
-        const comprobarDNI = expresiones["dni"].test(txtDNI.value);
-        evaluarClienteNuevo["DniCliente"] = comprobarDNI;
-        inputCheck(iconoDNI, txtDNI, comprobarDNI);
-    });
+        txtCorreoCliente.addEventListener('keyup', (e) => {
+            const comprobarCorreo = expresiones["correo"].test(txtCorreoCliente.value);
+            evaluarClienteNuevo["CorreoCliente"] = comprobarCorreo;
+            inputCheck(iconoCorreoCliente, txtCorreoCliente, comprobarCorreo);
+        });
 
-    txtNomCliente.addEventListener('keyup', (e) => {
-        const comprobarNomCliente = expresiones["nombreCliente"].test(txtNomCliente.value);
-        evaluarClienteNuevo["NomCliente"] = comprobarNomCliente;
-        inputCheck(iconoNomCliente, txtNomCliente, comprobarNomCliente);
-    });
+        txtDNI.addEventListener('keyup', (e) => {
+            const comprobarDNI = expresiones["dni"].test(txtDNI.value);
+            evaluarClienteNuevo["DniCliente"] = comprobarDNI;
+            inputCheck(iconoDNI, txtDNI, comprobarDNI);
+        });
 
-    txtPasswordCliente.addEventListener('keyup', (e) => {
-        const comprobarPassword = expresiones["password"].test(txtPasswordCliente.value);
-        evaluarClienteNuevo["PasswordCliente"] = comprobarPassword;
-        inputCheck(iconoPassword, txtPasswordCliente, comprobarPassword);
-    });
+        txtNomCliente.addEventListener('keyup', (e) => {
+            const comprobarNomCliente = expresiones["nombreCliente"].test(txtNomCliente.value);
+            evaluarClienteNuevo["NomCliente"] = comprobarNomCliente;
+            inputCheck(iconoNomCliente, txtNomCliente, comprobarNomCliente);
+        });
 
-    txtTelefonoCliente.addEventListener('keyup', (e) => {
-        const comprobarTelefonoCliente = expresiones["telefono"].test(txtTelefonoCliente.value);
-        evaluarClienteNuevo["telefonoCliente"] = comprobarTelefonoCliente;
-        inputCheck(iconoTelefonoCliente, txtTelefonoCliente, comprobarTelefonoCliente);
-    });
+        txtPasswordCliente.addEventListener('keyup', (e) => {
+            const comprobarPassword = expresiones["password"].test(txtPasswordCliente.value);
+            evaluarClienteNuevo["PasswordCliente"] = comprobarPassword;
+            inputCheck(iconoPassword, txtPasswordCliente, comprobarPassword);
+        });
+
+        txtTelefonoCliente.addEventListener('keyup', (e) => {
+            const comprobarTelefonoCliente = expresiones["telefono"].test(txtTelefonoCliente.value);
+            evaluarClienteNuevo["telefonoCliente"] = comprobarTelefonoCliente;
+            inputCheck(iconoTelefonoCliente, txtTelefonoCliente, comprobarTelefonoCliente);
+        });
+    }
 }
 
 function limpiarCampoFormulario() {

@@ -1,10 +1,10 @@
-window.addEventListener('load', (e)=>{
+window.addEventListener('load', (e) => {
     categoriaSel();
     platilloSel();
 });
-
-function platilloSel(idCategoria = null){
-    const url = idCategoria === null ? `${dominio}/platillo/sel/` : `${dominio}/platillo/sel/${idCategoria}/`;
+// const dominioFun() = 'http://127.0.0.1:5000/';
+function platilloSel(idCategoria = null) {
+    const url = idCategoria === null ? `${dominioFun()}platillo/sel/` : `${dominioFun()}platillo/sel/${idCategoria}/`;
     $.ajax({
         type: "GET",
         url: url,
@@ -15,14 +15,14 @@ function platilloSel(idCategoria = null){
             if (data["exito"] === true) {
                 $.each(data["resultado"], function (llave, valor) {
                     let template = `<div class="box">`;
-                        template += `<div class="price">S/<span>${valor["Precio"]}</span></div>`;
-                        template += `<img src="${dominio}/platillo/foto/${valor["CodigoPlatillo"]}/" alt="" />`;
-                        template += `<div class="name">${valor["NombrePlatillo"]}</div>`;
-                        template += `<form action="" method="post">`;
-                            template += `<input type="hidden" value="${valor["CodigoPlatillo"]}" min="1" max="100" value="1" class="qty inputCodigos" name="qty" />`;
-                            template += `<input type="number" min="1" max="100" value="1" class="qty inputCarrito" name="qty" />`;
-                            template += `<input type="submit" value="add to cart" name="add_to_cart" class="btn btnAgregarPlatillo" />`;
-                        template += `</form>`;
+                    template += `<div class="price">S/<span>${valor["Precio"]}</span></div>`;
+                    template += `<img src="${dominioFun()}platillo/foto/${valor["CodigoPlatillo"]}/" alt="" />`;
+                    template += `<div class="name">${valor["NombrePlatillo"]}</div>`;
+                    template += `<form action="" method="post">`;
+                    template += `<input type="hidden" value="${valor["CodigoPlatillo"]}" min="1" max="100" value="1" class="qty inputCodigos" name="qty" />`;
+                    template += `<input type="number" min="1" max="100" value="1" class="qty inputCarrito" name="qty" />`;
+                    template += `<input type="submit" value="add to cart" name="add_to_cart" class="btn btnAgregarPlatillo" />`;
+                    template += `</form>`;
                     template += `</div>`;
                     contenido += template;
                 });
@@ -33,17 +33,17 @@ function platilloSel(idCategoria = null){
     });
 }
 
-function categoriaSel(){
+function categoriaSel() {
     $.ajax({
         type: "GET",
-        url: `${dominio}/categoria/sel/`,
+        url: `${dominioFun()}categoria/sel/`,
         dataType: "json",
         success: function (data) {
             let contenido = '<li><button onclick="platilloSel()" class="btn">Todos</button></li>';
             if (data["exito"] === true) {
                 $.each(data["resultado"], function (llave, valor) {
                     let template = `<li><button class="btn" onclick="platilloSel(${valor["IDCategoria"]})">${valor["NomCategoria"]}</button></li>`;
-                    contenido+=template;
+                    contenido += template;
                 });
                 $('#listaCargo').html(contenido);
             }
@@ -65,15 +65,15 @@ function agregarPlatilloCarrito() {
         const btnAgregarPlatillo = btnsAgregarPlatillo[i];
         const inputCarrito = inputsCarrito[i];
         const inputCodigo = inputsCodigos[i];
-        btnAgregarPlatillo.addEventListener('click', (e)=>{
+        btnAgregarPlatillo.addEventListener('click', (e) => {
             e.preventDefault();
             console.log("Imprimir: " + localStorage.getItem("carrito"));
             const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
-            
+
             const validador = buscarElementCarrito(inputCodigo.value);
-            if(typeof validador === 'number'){
+            if (typeof validador === 'number') {
                 carrito[validador][1] = carrito[validador][1] + parseInt(inputCarrito.value);
-            }else{
+            } else {
                 carrito.push([
                     parseInt(inputCodigo.value),
                     parseInt(inputCarrito.value)
@@ -85,6 +85,7 @@ function agregarPlatilloCarrito() {
             listarCarrito();
             actualizarMontoVista();
         })
-        
+
     }
 }
+import { dominioFun } from './mainController.js';

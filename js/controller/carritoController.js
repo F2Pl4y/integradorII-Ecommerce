@@ -1,5 +1,8 @@
+
 const ordenCarrito = 0;
 var montoTotal = 100;
+import { dominioFun } from './mainController.js';
+import { checkSession } from './validadorCli.js';
 
 window.addEventListener("load", (e) => {
     listarCarrito();
@@ -18,7 +21,7 @@ function eliminarElementCarrito(idPlatillo) {
 
 async function platilloGet(idPlatillo) {
     const response_1 = await new Promise(function (resolve, reject) {
-        fetch(`${dominio}/platillo/get/${idPlatillo}/`)
+        fetch(`${dominioFun()}platillo/get/${idPlatillo}/`)
             .then(function (response) {
                 if (response.ok) {
                     resolve(response);
@@ -38,7 +41,7 @@ function buscarElementCarrito(nombreBuscar) {
     let indice = 0;
     nombreBuscar = parseInt(nombreBuscar);
     for (const element of carrito) {
-        if(element[0] === nombreBuscar){
+        if (element[0] === nombreBuscar) {
             return indice;
         }
         indice++;
@@ -55,7 +58,7 @@ async function listarCarrito() {
         const cantidad = element[1];
         contenido += `<div class="box">`;
         contenido += `<button onclick="eliminarElementCarrito(${platillo.resultado.CodigoPlatillo})" class="fas fa-times"></button>`;
-        contenido += `<img src="${dominio}/platillo/foto/${platillo.resultado.CodigoPlatillo}/" alt="" />`;
+        contenido += `<img src="${dominioFun()}platillo/foto/${platillo.resultado.CodigoPlatillo}/" alt="" />`;
         contenido += `<div class="content">`;
         contenido += `<p>${platillo.resultado.NombrePlatillo}</span></p>`;
         contenido += `<form action="" method="post">`;
@@ -64,7 +67,7 @@ async function listarCarrito() {
         contenido += `<button type="button" class="fas fa-edit btnUpdateCarrito" name="update_qty"></button>`;
         contenido += `</form>`;
         contenido += `</div>`;
-        contenido += `</div>`;   
+        contenido += `</div>`;
     }
     $("#listaCarrito").html(contenido);
     actualizarCantidadCarrito();
@@ -75,19 +78,19 @@ async function listarCarrito() {
 async function obtenerMontoTotal() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     const respuesta = await new Promise(function (resolve, reject) {
-        fetch(`${dominio}platillo/total/`,{
+        fetch(`${dominioFun()}platillo/total/`, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(carrito)
         }).then(function (response) {
-                if (response.ok) {
-                    resolve(response);
-                } else {
-                    reject(new Error("Error: " + response.status));
-                }
-            })
+            if (response.ok) {
+                resolve(response);
+            } else {
+                reject(new Error("Error: " + response.status));
+            }
+        })
             .catch(function (error) {
                 reject(error);
             });
@@ -95,9 +98,9 @@ async function obtenerMontoTotal() {
     return respuesta.json();
 }
 
-async function actualizarMontoVista(){
+async function actualizarMontoVista() {
     const monto = await obtenerMontoTotal();
-    $('#montoTotal').html('Monto total: S/'+monto["resultado"]);
+    $('#montoTotal').html('Monto total: S/' + monto["resultado"]);
     localStorage.setItem("montoTotal", monto["resultado"]);
     checkSession();
 }
@@ -119,7 +122,6 @@ function actualizarCarrito() {
         btn.addEventListener("click", (e) => {
             e.preventDefault();
             const idPlatillo = idPlatillos[i].value;
-            console.log("Platillo" + typeof idPlatillo);
             const cantidad = inputsPlatillo[i].value;
             const indice = buscarElementCarrito(idPlatillo);
             carrito[indice][1] = parseInt(cantidad);

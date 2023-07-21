@@ -23,10 +23,8 @@ function botonesPaypal() {
             },
             onApprove: function (data, actions) {
                 actions.order.capture().then(function (detalles) {
-                    console.log(detalles);
                     let tokenC = sessionStorage.getItem("access_token");
                     isSessionValid(tokenC).then((resultado) => {
-                        console.log(resultado);
                         if (resultado["exito"]) {
                             const carrito =
                                 localStorage.getItem("carrito") === null
@@ -46,7 +44,6 @@ function botonesPaypal() {
                                 dataType: "json",
                                 contentType: "application/json",
                                 success: function (data) {
-                                    console.log(data);
                                     mensajeValidacion(data["resultado"], data["exito"]);
                                     if (data["exito"]) {
                                         localStorage.setItem("carrito", JSON.stringify([]));
@@ -63,7 +60,7 @@ function botonesPaypal() {
             onCancel: function (data) {
                 mensajeValidacion("Compra cancelada", false);
             },
-            onError(err){
+            onError(err) {
                 mensajeValidacion("Hubo un error en la compra", false);
             }
         })

@@ -1,16 +1,16 @@
-const dominio = 'http://127.0.0.1:5000/';
-
+// const dominio = 'http://127.0.0.1:5000/';
+import { dominioFun } from './mainController.js';
+import { isSessionValid } from './validadorCli.js';
 document.addEventListener('DOMContentLoaded', function () {
     isSessionValid()
         .then((resultado) => {
             $.ajax({
                 type: "GET",
-                url: `${dominio}valoresFactura/${resultado.resultado[0]}/`,
+                url: `${dominioFun()}valoresFactura/${resultado.resultado[0]}/`,
                 dataType: "json",
                 success: function (response) {
                     if (typeof response === 'object' && response !== null) {
                         let detallesTabla = response.resultado.detallesTabla;
-                        console.log(response);
                         detallesTabla.forEach(function (detalle, index) {
                             let section = document.createElement('section');
                             section.classList.add('section-hijo');
@@ -157,7 +157,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function guardarPDF(codPedido, index) {
-        console.log("IDPedido " + codPedido);
         if (typeof codPedido === 'undefined' || codPedido === null) {
             console.error("El valor de codPedido no está definido.");
             return;
@@ -218,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 type: "GET",
                 // url: `${dominioV}PDF/sel/${resultado.resultado[4]}/`,
-                url: `${dominio}PDF/sel/${codPedido}/`,
+                url: `${dominioFun()}PDF/sel/${codPedido}/`,
                 dataType: "json",
                 contentType: 'application/json',
                 success: function (response) {
@@ -379,7 +378,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Agregar el código QR
                         var qrImage = new Image();
                         qrImage.src = `data:image/png;base64, ${apiData.codigoQR}`; // Ruta base64 del código QR
-                        // console.log("EL QUR ES:\n", qrImage.src);
 
                         // Ajustar el tamaño del código QR
                         var qrWidth = 50;
