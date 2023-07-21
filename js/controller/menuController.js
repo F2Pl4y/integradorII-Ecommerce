@@ -2,7 +2,6 @@ window.addEventListener('load', (e) => {
     categoriaSel();
     platilloSel();
 });
-// const dominioFun() = 'http://127.0.0.1:5000/';
 function platilloSel(idCategoria = null) {
     const url = idCategoria === null ? `${dominioFun()}platillo/sel/` : `${dominioFun()}platillo/sel/${idCategoria}/`;
     $.ajax({
@@ -10,10 +9,10 @@ function platilloSel(idCategoria = null) {
         url: url,
         dataType: "json",
         success: function (data) {
-            if (idcategoria != null) {
-                idcategoriaglobal = idcategoria
-            }
-            // idCategoriaGlobal = idCategoria;
+            // if (idcategoria != null) {
+            //     idcategoriaglobal = idcategoria
+            // }
+            let idCategoriaGlobal = idCategoria;
             let contenido = '';
             if (data["exito"] === true) {
                 $.each(data["resultado"], function (llave, valor) {
