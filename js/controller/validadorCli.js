@@ -1,4 +1,4 @@
-import { dominioFun } from './mainController.js';
+import { dominioFun, mensajeValidacion } from './mainController.js';
 
 export function isSessionValid() {
     const token = sessionStorage.getItem("access_token");

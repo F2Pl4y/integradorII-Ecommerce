@@ -45,7 +45,7 @@ function inputCheck(icono, input, boolean) {
     }
 }
 
-function mensajeValidacion(mensaje, validacion) {
+export function mensajeValidacion(mensaje, validacion) {
     const config = {
         title: validacion ? 'Exito' : 'Error',
         text: mensaje,
