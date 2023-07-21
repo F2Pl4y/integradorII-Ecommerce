@@ -45,7 +45,7 @@ export function buscarElementCarrito(nombreBuscar) {
     return false;
 }
 
-async function listarCarrito() {
+export async function listarCarrito() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let contenido = '';
     for (let i = 0; i < carrito.length; i++) {
