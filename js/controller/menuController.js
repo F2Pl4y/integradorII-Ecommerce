@@ -88,5 +88,5 @@ function agregarPlatilloCarrito() {
     }
 }
 import { dominioFun, miniAlerta } from './mainController.js';
-import { buscarElementCarrito } from './carritoController.js';
+import { buscarElementCarrito, listarCarrito, actualizarMontoVista } from './carritoController.js';
 
