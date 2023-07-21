@@ -57,7 +57,7 @@ export function mensajeValidacion(mensaje, validacion) {
 }
 
 
-function miniAlerta(icono, mensaje) {
+export function miniAlerta(icono, mensaje) {
     const Toast = Swal.mixin({
         toast: true,
         position: 'bottom-end',

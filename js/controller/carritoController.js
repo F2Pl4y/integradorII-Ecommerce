@@ -127,5 +127,5 @@ function actualizarCarrito() {
         });
     }
 }
-import { dominioFun } from './mainController.js';
+import { dominioFun, miniAlerta } from './mainController.js';
 import { checkSession } from './validadorCli.js';
