@@ -6,7 +6,7 @@ window.addEventListener("load", (e) => {
     actualizarMontoVista();
 });
 
-function eliminarElementCarrito(idPlatillo) {
+export function eliminarElementCarrito(idPlatillo) {
     let carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     const carritoFiltrado = carrito.filter(elemento => elemento[0] !== idPlatillo);
     localStorage.setItem("carrito", JSON.stringify(carritoFiltrado));
@@ -15,7 +15,7 @@ function eliminarElementCarrito(idPlatillo) {
     listarCarrito();
 }
 
-async function platilloGet(idPlatillo) {
+export async function platilloGet(idPlatillo) {
     const response_1 = await new Promise(function (resolve, reject) {
         fetch(`${dominioFun()}platillo/get/${idPlatillo}/`)
             .then(function (response) {
@@ -45,6 +45,7 @@ export function buscarElementCarrito(nombreBuscar) {
     return false;
 }
 
+window.eliminarElementCarrito = eliminarElementCarrito;
 export async function listarCarrito() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let contenido = '';
@@ -64,6 +65,21 @@ export async function listarCarrito() {
         contenido += `</form>`;
         contenido += `</div>`;
         contenido += `</div>`;
+
+
+        // contenido += `<div class="box">`;
+        // contenido += `<button class="fas fa-times btnEliminar" data-idplatillo="${platillo.resultado.CodigoPlatillo}"></button>`;
+        // contenido += `<img src="${dominioFun()}platillo/foto/${platillo.resultado.CodigoPlatillo}/" alt="" />`;
+        // contenido += `<div class="content">`;
+        // contenido += `<p>${platillo.resultado.NombrePlatillo}</span></p>`;
+        // contenido += `<form action="" method="post">`;
+        // contenido += `<input type="hidden" class="idPlatillo" name="qty" value="${platillo.resultado.CodigoPlatillo}"/>`;
+        // contenido += `<input type="number" class="qty inputPlatillo" name="qty" min="1" value="${cantidad}" max="100" />`;
+        // contenido += `<button type="button" class="fas fa-edit btnUpdateCarrito" name="update_qty"></button>`;
+        // contenido += `</form>`;
+        // contenido += `</div>`;
+        // contenido += `</div>`;
+
     }
     $("#listaCarrito").html(contenido);
     actualizarCantidadCarrito();
