@@ -1,7 +1,7 @@
 // export const dominio = 'http://127.0.0.1:5000/';
 
 export function dominioFun() {
-    return 'http://38.25.17.172:5000/';
+    return 'https://f3rn4nd021py.pythonanywhere.com/';
 }
 const expresiones = {
     nombreCargo: /^[\w,\s]{5,30}$/,
