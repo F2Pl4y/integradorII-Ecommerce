@@ -53,7 +53,7 @@ export async function listarCarrito() {
         let platillo = await platilloGet(element[0]);
         const cantidad = element[1];
         contenido += `<div class="box">`;
-        contenido += `<button onclick="eliminarElementCarrito(${platillo.resultado.CodigoPlatillo})" class="fas fa-times"></button>`;
+        contenido += `<button onclick="eliminarElementCarrito(${platillo.resultado.CodigoPlatillo});" class="fas fa-times"></button>`;
         contenido += `<img src="${dominioFun()}platillo/foto/${platillo.resultado.CodigoPlatillo}/" alt="" />`;
         contenido += `<div class="content">`;
         contenido += `<p>${platillo.resultado.NombrePlatillo}</span></p>`;
