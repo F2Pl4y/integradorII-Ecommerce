@@ -66,7 +66,6 @@ function agregarPlatilloCarrito() {
         const inputCodigo = inputsCodigos[i];
         btnAgregarPlatillo.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log("Imprimir: " + localStorage.getItem("carrito"));
             const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
 
             const validador = buscarElementCarrito(inputCodigo.value);
