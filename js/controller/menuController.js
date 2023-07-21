@@ -1,3 +1,4 @@
+import { buscarElementCarrito } from './carritoController.js';
 window.addEventListener('load', (e) => {
     categoriaSel();
     platilloSel();

@@ -36,7 +36,7 @@ async function platilloGet(idPlatillo) {
     return response_1.json();
 }
 
-function buscarElementCarrito(nombreBuscar) {
+export function buscarElementCarrito(nombreBuscar) {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let indice = 0;
     nombreBuscar = parseInt(nombreBuscar);
