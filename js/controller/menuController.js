@@ -1,15 +1,10 @@
-// import { dominio } from './mainController.js';
-window.addEventListener('load', (e) => {
+window.addEventListener('load', (e)=>{
     categoriaSel();
     platilloSel();
 });
 
-/*
-    Se encarga de obtener y mostrar los platillos de una categoría 
-    específica o de todas las categorías.
-*/
-function platilloSel(idCategoria = null) {
-    const url = idCategoria === null ? `${window.dominio}platillo/sel/` : `${window.dominio}platillo/sel/${idCategoria}/`;
+function platilloSel(idCategoria = null){
+    const url = idCategoria === null ? `${dominio}/platillo/sel/` : `${dominio}/platillo/sel/${idCategoria}/`;
     $.ajax({
         type: "GET",
         url: url,
@@ -20,14 +15,14 @@ function platilloSel(idCategoria = null) {
             if (data["exito"] === true) {
                 $.each(data["resultado"], function (llave, valor) {
                     let template = `<div class="box">`;
-                    template += `<div class="price">S/<span>${valor["Precio"]}</span></div>`;
-                    template += `<img src="${window.dominio}/platillo/foto/${valor["CodigoPlatillo"]}/" alt="" />`;
-                    template += `<div class="name">${valor["NombrePlatillo"]}</div>`;
-                    template += `<form action="" method="post">`;
-                    template += `<input type="hidden" value="${valor["CodigoPlatillo"]}" min="1" max="100" value="1" class="qty inputCodigos" name="qty" />`;
-                    template += `<input type="number" min="1" max="100" value="1" class="qty inputCarrito" name="qty" />`;
-                    template += `<input type="submit" value="add to cart" name="add_to_cart" class="btn btnAgregarPlatillo" />`;
-                    template += `</form>`;
+                        template += `<div class="price">S/<span>${valor["Precio"]}</span></div>`;
+                        template += `<img src="${dominio}/platillo/foto/${valor["CodigoPlatillo"]}/" alt="" />`;
+                        template += `<div class="name">${valor["NombrePlatillo"]}</div>`;
+                        template += `<form action="" method="post">`;
+                            template += `<input type="hidden" value="${valor["CodigoPlatillo"]}" min="1" max="100" value="1" class="qty inputCodigos" name="qty" />`;
+                            template += `<input type="number" min="1" max="100" value="1" class="qty inputCarrito" name="qty" />`;
+                            template += `<input type="submit" value="add to cart" name="add_to_cart" class="btn btnAgregarPlatillo" />`;
+                        template += `</form>`;
                     template += `</div>`;
                     contenido += template;
                 });
@@ -38,21 +33,17 @@ function platilloSel(idCategoria = null) {
     });
 }
 
-/*
-    Se encarga de obtener y mostrar las categorías de platillos 
-    disponibles en la interfaz de usuario.
-*/
-function categoriaSel() {
+function categoriaSel(){
     $.ajax({
         type: "GET",
-        url: `${window.dominio}categoria/sel/`,
+        url: `${dominio}/categoria/sel/`,
         dataType: "json",
         success: function (data) {
             let contenido = '<li><button onclick="platilloSel()" class="btn">Todos</button></li>';
             if (data["exito"] === true) {
                 $.each(data["resultado"], function (llave, valor) {
                     let template = `<li><button class="btn" onclick="platilloSel(${valor["IDCategoria"]})">${valor["NomCategoria"]}</button></li>`;
-                    contenido += template;
+                    contenido+=template;
                 });
                 $('#listaCargo').html(contenido);
             }
@@ -66,10 +57,6 @@ function categoriaSel() {
  * @param
  * @returns
  */
-/*
-    Se encarga de añadir platillos al carrito de compras cuando 
-    se hace clic en el botón correspondiente en la interfaz de usuario.
-*/
 function agregarPlatilloCarrito() {
     const btnsAgregarPlatillo = document.querySelectorAll('.btnAgregarPlatillo');
     const inputsCarrito = document.querySelectorAll('.inputCarrito');
@@ -78,15 +65,15 @@ function agregarPlatilloCarrito() {
         const btnAgregarPlatillo = btnsAgregarPlatillo[i];
         const inputCarrito = inputsCarrito[i];
         const inputCodigo = inputsCodigos[i];
-        btnAgregarPlatillo.addEventListener('click', (e) => {
+        btnAgregarPlatillo.addEventListener('click', (e)=>{
             e.preventDefault();
             console.log("Imprimir: " + localStorage.getItem("carrito"));
             const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
-
+            
             const validador = buscarElementCarrito(inputCodigo.value);
-            if (typeof validador === 'number') {
+            if(typeof validador === 'number'){
                 carrito[validador][1] = carrito[validador][1] + parseInt(inputCarrito.value);
-            } else {
+            }else{
                 carrito.push([
                     parseInt(inputCodigo.value),
                     parseInt(inputCarrito.value)
@@ -98,6 +85,6 @@ function agregarPlatilloCarrito() {
             listarCarrito();
             actualizarMontoVista();
         })
-
+        
     }
 }

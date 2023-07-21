@@ -1,15 +1,12 @@
-
-// import { dominio } from './mainController.js';
 const ordenCarrito = 0;
 var montoTotal = 100;
+
 window.addEventListener("load", (e) => {
     listarCarrito();
     actualizarCantidadCarrito();
     actualizarMontoVista();
 });
-/*
-    Se encarga de eliminar un elemento específico del carrito de compras.
-*/
+
 function eliminarElementCarrito(idPlatillo) {
     let carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     const carritoFiltrado = carrito.filter(elemento => elemento[0] !== idPlatillo);
@@ -19,13 +16,9 @@ function eliminarElementCarrito(idPlatillo) {
     listarCarrito();
 }
 
-/*
-    Se encarga de realizar una solicitud HTTP GET para obtener información
-    de un platillo específico utilizando su idPlatillo.
-*/
 async function platilloGet(idPlatillo) {
     const response_1 = await new Promise(function (resolve, reject) {
-        fetch(`${window.dominio}platillo/get/${idPlatillo}/`)
+        fetch(`${dominio}/platillo/get/${idPlatillo}/`)
             .then(function (response) {
                 if (response.ok) {
                     resolve(response);
@@ -40,15 +33,12 @@ async function platilloGet(idPlatillo) {
     return response_1.json();
 }
 
-/*
-    Se encarga de buscar un elemento específico del carrito de compras.
-*/
 function buscarElementCarrito(nombreBuscar) {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let indice = 0;
     nombreBuscar = parseInt(nombreBuscar);
     for (const element of carrito) {
-        if (element[0] === nombreBuscar) {
+        if(element[0] === nombreBuscar){
             return indice;
         }
         indice++;
@@ -56,10 +46,6 @@ function buscarElementCarrito(nombreBuscar) {
     return false;
 }
 
-/*
-    Se encarga de listar todos y cada uno de los productos que hayan sido
-    cargados al carrito de compras.
-*/
 async function listarCarrito() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let contenido = '';
@@ -69,7 +55,7 @@ async function listarCarrito() {
         const cantidad = element[1];
         contenido += `<div class="box">`;
         contenido += `<button onclick="eliminarElementCarrito(${platillo.resultado.CodigoPlatillo})" class="fas fa-times"></button>`;
-        contenido += `<img src="${window.dominio}/platillo/foto/${platillo.resultado.CodigoPlatillo}/" alt="" />`;
+        contenido += `<img src="${dominio}/platillo/foto/${platillo.resultado.CodigoPlatillo}/" alt="" />`;
         contenido += `<div class="content">`;
         contenido += `<p>${platillo.resultado.NombrePlatillo}</span></p>`;
         contenido += `<form action="" method="post">`;
@@ -78,7 +64,7 @@ async function listarCarrito() {
         contenido += `<button type="button" class="fas fa-edit btnUpdateCarrito" name="update_qty"></button>`;
         contenido += `</form>`;
         contenido += `</div>`;
-        contenido += `</div>`;
+        contenido += `</div>`;   
     }
     $("#listaCarrito").html(contenido);
     actualizarCantidadCarrito();
@@ -86,25 +72,22 @@ async function listarCarrito() {
     actualizarMontoVista();
 }
 
-/*
-    Se encarga de obtener el monto total de los productos añadidos al carrito de compras.
-*/
 async function obtenerMontoTotal() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     const respuesta = await new Promise(function (resolve, reject) {
-        fetch(`${window.dominio}platillo/total/`, {
+        fetch(`${dominio}platillo/total/`,{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify(carrito)
         }).then(function (response) {
-            if (response.ok) {
-                resolve(response);
-            } else {
-                reject(new Error("Error: " + response.status));
-            }
-        })
+                if (response.ok) {
+                    resolve(response);
+                } else {
+                    reject(new Error("Error: " + response.status));
+                }
+            })
             .catch(function (error) {
                 reject(error);
             });
@@ -112,22 +95,13 @@ async function obtenerMontoTotal() {
     return respuesta.json();
 }
 
-/*
-    Se encarga de actualizar la vista del monto total en la interfaz de usuario, 
-    así como de mostrar u ocultar los botones de PayPal y la dirección de pedido 
-    en función del monto total.
-*/
-async function actualizarMontoVista() {
+async function actualizarMontoVista(){
     const monto = await obtenerMontoTotal();
-    $('#montoTotal').html('Monto total: S/' + monto["resultado"]);
+    $('#montoTotal').html('Monto total: S/'+monto["resultado"]);
     localStorage.setItem("montoTotal", monto["resultado"]);
     checkSession();
 }
 
-/*
-    Se encarga de actualizar la cantidad de elementos en el carrito de compras 
-    y mostrarlo en la interfaz de usuario
-*/
 function actualizarCantidadCarrito() {
     const carrito = localStorage.getItem("carrito") === null ? [] : JSON.parse(localStorage.getItem("carrito"));
     let cantidad = 0;
@@ -135,10 +109,6 @@ function actualizarCantidadCarrito() {
     $('#cantidadCarrito').html(cantidad);
 }
 
-/*
-    Se encarga de actualizar la cantidad de un platillo en el carrito de compras
-    cuando se hace clic en el botón correspondiente en la interfaz de usuario.
-*/
 function actualizarCarrito() {
     const btnsUpdateCarrito = document.querySelectorAll(".btnUpdateCarrito");
     const idPlatillos = document.querySelectorAll(".idPlatillo");

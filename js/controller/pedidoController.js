@@ -1,10 +1,7 @@
-// import { dominio } from './mainController.js';
 window.addEventListener("load", (e) => {
     botonesPaypal();
 });
-/*
-    Se encarga de configurar y mostrar los botones de PayPal en la interfaz de usuario.
-*/
+
 function botonesPaypal() {
     paypal
         .Buttons({
@@ -35,8 +32,6 @@ function botonesPaypal() {
                                 localStorage.getItem("carrito") === null
                                     ? []
                                     : JSON.parse(localStorage.getItem("carrito"));
-                            console.log("MI CARRITO\n", carrito);
-                            console.log("MI CLIENTE\n", resultado["resultado"][0]);
                             const direccion = document.getElementById("inputDireccion").value;
                             const total = parseFloat(localStorage.getItem("montoTotal"));
                             $.ajax({
@@ -68,7 +63,7 @@ function botonesPaypal() {
             onCancel: function (data) {
                 mensajeValidacion("Compra cancelada", false);
             },
-            onError(err) {
+            onError(err){
                 mensajeValidacion("Hubo un error en la compra", false);
             }
         })

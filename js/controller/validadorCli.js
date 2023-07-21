@@ -1,14 +1,9 @@
-// import { dominio } from './mainController.js';
-/*
-    Se encarga de verificar si la sesión de un cliente es válida 
-    consultando en el servidor.
-*/
 function isSessionValid() {
     const token = sessionStorage.getItem("access_token");
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: `${window.dominio}secureCli`,
+            url: `${dominio}/secureCli`,
             dataType: "json",
             headers: {
                 Authorization: "Token " + token,
@@ -31,18 +26,23 @@ function checkSession() {
             const btnCuenta = document.getElementById('user-btn');
             const contenedorPaypalBotones = document.getElementById('paypal-button-container');
             const direccionPedido = document.getElementById('direccionPedido');
+            console.log(contenedorPaypalBotones);
+            console.log(direccionPedido);
+            console.log(resultado);
             if (resultado["exito"]) {
+                console.log("Entré exito");
                 btnCuenta.setAttribute("data-toggle", "modal");
                 btnCuenta.setAttribute("data-target", "#cuenta");
                 $('#nombreCliente').html(resultado["resultado"][3]);
                 $('#correoCliente').html(resultado["resultado"][1]);
                 $('#dniCliente').html(resultado["resultado"][2]);
                 $('#TelefonoCliente').html(resultado["resultado"][4]);
-                document.querySelector('#user-btn').onclick = () => { }
+                document.querySelector('#user-btn').onclick = () =>{}
                 contenedorPaypalBotones.style.display = localStorage.getItem("montoTotal") !== "0" ? "Block" : "None";
                 direccionPedido.style.display = localStorage.getItem("montoTotal") !== "0" ? "Block" : "None";
-            } else {
-                document.querySelector('#user-btn').onclick = () => {
+            }else{
+                console.log("No Entré exito");
+                document.querySelector('#user-btn').onclick = () =>{
                     account.classList.add('active');
                     $("#txtCorreoClienteLog").val('');
                     $("#txtPasswordClienteLog").val('');
@@ -52,10 +52,10 @@ function checkSession() {
                 contenedorPaypalBotones.style.display = "None";
                 direccionPedido.style.display = "None";
             }
-
+            
         })
         .catch((error) => {
-
+            
         });
 }
 
@@ -65,37 +65,28 @@ window.addEventListener("load", (e) => {
     checkSession();
 });
 
-/*
-    Se encarga de cerrar la sesión de un cliente cuando se hace clic 
-    en el botón correspondiente en la interfaz de usuario.
-*/
-function cerrarSesion() {
-    if (window.location.pathname === "/index.html") {
-
+function cerrarSesion(){
+    if(window.location.pathname === "/index.html"){
         const btnCerrarSesion = document.getElementById('btnCerrarSesion');
-        btnCerrarSesion.addEventListener('click', (e) => {
+        btnCerrarSesion.addEventListener('click', (e)=>{
             sessionStorage.removeItem("access_token");
             checkSession();
             $('#cuenta').modal('hide');
+            mensajeValidacion("Cerró sesión correctamente", true);
         });
     }
 }
 
-/*
-    Se encarga de iniciar la sesión de un cliente cuando se hace clic 
-    en el botón correspondiente en la interfaz de usuario.
-*/
 function iniciarSesion() {
-    if (window.location.pathname === "/index.html") {
-        evaluarCampos();
+    if(window.location.pathname === "/index.html"){
         const btnLogin = document.getElementById("btnLogin");
         btnLogin.addEventListener("click", (e) => {
             e.preventDefault();
             var correo = $("#txtCorreoClienteLog").val();
             var password = $("#txtPasswordClienteLog").val();
-
+    
             $.ajax({
-                url: `${window.dominio}/cliente/loginCli/`,
+                url: `${dominio}/cliente/loginCli/`,
                 type: "POST",
                 dataType: "json",
                 contentType: "application/json",
@@ -104,9 +95,11 @@ function iniciarSesion() {
                     PasswordCliente: password,
                 }),
                 success: function (response) {
+                    console.log(response);
                     if (response["estado"]) {
                         sessionStorage.setItem("access_token", response["mensaje"]);
                         checkSession();
+                        mensajeValidacion("Inició sesión correctamente", true);
                         const ventanaCuenta = document.querySelector('.user-account');
                         ventanaCuenta.classList.remove("active");
                     } else {

@@ -1,23 +1,26 @@
-// import { dominio } from './mainController.js';
+const dominio = 'http://127.0.0.1:5000/';
+
 document.addEventListener('DOMContentLoaded', function () {
-    // Realizar la llamada AJAX
     isSessionValid()
         .then((resultado) => {
             $.ajax({
                 type: "GET",
-                url: `${window.dominio}valoresFactura/${resultado.resultado[0]}/`,
+                url: `${dominio}valoresFactura/${resultado.resultado[0]}/`,
                 dataType: "json",
                 success: function (response) {
-                    // Verificar la respuesta y pintar las tablas
                     if (typeof response === 'object' && response !== null) {
                         let detallesTabla = response.resultado.detallesTabla;
+                        console.log(response);
                         detallesTabla.forEach(function (detalle, index) {
                             let section = document.createElement('section');
                             section.classList.add('section-hijo');
 
                             let tabla = pintarTabla(detalle, index + 1, response.resultado.detallesTabla[index].CodPedido);
+
                             section.appendChild(tabla);
+
                             document.getElementById('contenedor-tablas').appendChild(section);
+
                         });
                     }
                     // Botón para desplegar todas las tablas
@@ -60,10 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.body.insertBefore(contenedorBotones, document.getElementById('contenedor-tablas'));
                 },
                 error: function (xhr, status, error) {
-                    console.log(xhr, "\n", status, "\n", error) // Manejo de errores
+                    console.log(error); // Manejo de errores
                 }
             });
-        }).catch((error) => {
+        })
+        .catch((error) => {
             console.log("Error: ", error);
         });
 
@@ -153,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function guardarPDF(codPedido, index) {
+        console.log("IDPedido " + codPedido);
         if (typeof codPedido === 'undefined' || codPedido === null) {
             console.error("El valor de codPedido no está definido.");
             return;
@@ -213,10 +218,11 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 type: "GET",
                 // url: `${dominioV}PDF/sel/${resultado.resultado[4]}/`,
-                url: `${window.dominio}PDF/sel/${codPedido}/`,
+                url: `${dominio}PDF/sel/${codPedido}/`,
                 dataType: "json",
                 contentType: 'application/json',
                 success: function (response) {
+                    console.log(response);
                     // Obtener los datos del objeto de respuesta
                     var apiData = response.resultado;
 
@@ -373,6 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Agregar el código QR
                         var qrImage = new Image();
                         qrImage.src = `data:image/png;base64, ${apiData.codigoQR}`; // Ruta base64 del código QR
+                        // console.log("EL QUR ES:\n", qrImage.src);
 
                         // Ajustar el tamaño del código QR
                         var qrWidth = 50;
@@ -384,7 +391,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         // Agregar el código QR al documento PDF
                         doc.addImage(qrImage, qrX, qrY, qrWidth, qrHeight);
-
 
                         // Guardar el PDF
                         doc.save(`Boleta#${response.numBoleta}.pdf`);
@@ -413,3 +419,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     regresar();
 });
+
+
+// **************************
