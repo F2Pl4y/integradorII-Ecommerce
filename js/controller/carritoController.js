@@ -94,7 +94,7 @@ async function obtenerMontoTotal() {
     return respuesta.json();
 }
 
-async function actualizarMontoVista() {
+export async function actualizarMontoVista() {
     const monto = await obtenerMontoTotal();
     $('#montoTotal').html('Monto total: S/' + monto["resultado"]);
     localStorage.setItem("montoTotal", monto["resultado"]);
