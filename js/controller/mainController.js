@@ -15,7 +15,7 @@ const expresiones = {
     direccion: /^[\wáéíóúÁÉÍÓÚñÑ\s]{1,150}$/
 }
 
-const evaluarClienteNuevo = {
+export const evaluarClienteNuevo = {
     CorreoCliente: false,
     DniCliente: false,
     NomCliente: false,
