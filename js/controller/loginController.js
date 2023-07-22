@@ -64,4 +64,4 @@ function clienteIns() {
     });
 
 }
-import { dominioFun, evaluarClienteNuevo, mensajeValidacion } from './mainController.js';
+import { dominioFun, evaluarClienteNuevo, mensajeValidacion, limpiarCampoFormulario } from './mainController.js';

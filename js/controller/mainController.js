@@ -119,7 +119,7 @@ function evaluarCampos() {
     }
 }
 
-function limpiarCampoFormulario() {
+export function limpiarCampoFormulario() {
     $('#txtCorreoCliente').val('');
     $('#txtCorreoCliente').removeClass('positivo');
     $('#txtCorreoCliente').removeClass('negativo');
