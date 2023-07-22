@@ -2,7 +2,7 @@ window.addEventListener("load", (e) => {
     botonesPaypal();
 });
 
-function botonesPaypal() {
+export function botonesPaypal() {
     paypal
         .Buttons({
             style: {
@@ -34,7 +34,7 @@ function botonesPaypal() {
                             const total = parseFloat(localStorage.getItem("montoTotal"));
                             $.ajax({
                                 type: "POST",
-                                url: dominioFun + "detallepedido/ins/",
+                                url: dominioFun() + "detallepedido/ins/",
                                 data: JSON.stringify({
                                     "direccion": direccion,
                                     "total": total,
@@ -66,4 +66,6 @@ function botonesPaypal() {
         })
         .render("#paypal-button-container");
 }
-import { dominioFun } from './mainController.js';
+import { dominioFun, mensajeValidacion } from './mainController.js';
+import { isSessionValid } from './validadorCli.js';
+import { listarCarrito, actualizarMontoVista } from './carritoController.js';
