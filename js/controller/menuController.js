@@ -2,7 +2,9 @@ window.addEventListener('load', (e) => {
     categoriaSel();
     platilloSel();
 });
-function platilloSel(idCategoria = null) {
+
+window.platilloSel = platilloSel;
+export function platilloSel(idCategoria = null) {
     const url = idCategoria === null ? `${dominioFun()}platillo/sel/` : `${dominioFun()}platillo/sel/${idCategoria}/`;
     $.ajax({
         type: "GET",
