@@ -1,4 +1,4 @@
-import { dominioFun, mensajeValidacion } from './mainController.js';
+
 
 export function isSessionValid() {
     const token = sessionStorage.getItem("access_token");
@@ -106,3 +106,5 @@ function iniciarSesion() {
         });
     }
 }
+import { dominioFun, mensajeValidacion } from './mainController.js';
+import { account } from '../script.js';

@@ -21,12 +21,10 @@ body {
   justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
-  /* background-color: darkolivegreen; */
 }
 
 .section-hijo {
   margin: 0 10px 5px 10px;
-  /* margin-bottom: 20px; */
   min-width: calc(100% - 20px);
   max-width: calc(100% - 20px);
   align-items: center;
