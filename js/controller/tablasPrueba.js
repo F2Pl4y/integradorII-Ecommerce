@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 dataType: "json",
                 success: function (response) {
                     if (typeof response === 'object' && response !== null) {
-                        console.log(detallesTabla);
+                        let detallesTabla = response.resultado.detallesTabla;
                         if (detallesTabla && Array.isArray(detallesTabla)) {
                             detallesTabla.forEach(function (detalle, index) {
                                 let section = document.createElement('section');
