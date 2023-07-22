@@ -32,7 +32,7 @@ function platilloSel(idCategoria = null) {
     });
 }
 
-function categoriaSel() {
+export function categoriaSel() {
     $.ajax({
         type: "GET",
         url: `${dominioFun()}categoria/sel/`,
