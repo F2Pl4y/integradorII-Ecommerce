@@ -2,13 +2,13 @@ function registrarLosClientes() {
     const btnRegistarCliente = document.getElementById('btnRegistarCliente');
     btnRegistarCliente.addEventListener('click', (e) => {
         e.preventDefault();
-        
-        if(evaluarClienteNuevo["CorreoCliente"] && evaluarClienteNuevo["DniCliente"] && evaluarClienteNuevo["NomCliente"] && evaluarClienteNuevo["PasswordCliente"] && evaluarClienteNuevo["telefonoCliente"]){
+
+        if (evaluarClienteNuevo["CorreoCliente"] && evaluarClienteNuevo["DniCliente"] && evaluarClienteNuevo["NomCliente"] && evaluarClienteNuevo["PasswordCliente"] && evaluarClienteNuevo["telefonoCliente"]) {
             clienteIns();
-        }else{
+        } else {
             mensajeValidacion('Existen campos que no se han completado correctamente, por favor revisar el formulario', false);
         }
-    }) 
+    })
 }
 
 window.addEventListener('load', (e) => {
@@ -56,11 +56,11 @@ function clienteIns() {
         processData: false,
         success: function (data) {
             mensajeValidacion(data["mensaje"], data["exito"]);
-            if(data["exito"]){
+            if (data["exito"]) {
                 limpiarCampoFormulario();
             }
         }
-        
+
     });
-    
+
 }
