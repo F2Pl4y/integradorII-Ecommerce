@@ -34,7 +34,7 @@ function botonesPaypal() {
                             const total = parseFloat(localStorage.getItem("montoTotal"));
                             $.ajax({
                                 type: "POST",
-                                url: dominio + "detallepedido/ins/",
+                                url: dominioFun + "detallepedido/ins/",
                                 data: JSON.stringify({
                                     "direccion": direccion,
                                     "total": total,
@@ -66,3 +66,4 @@ function botonesPaypal() {
         })
         .render("#paypal-button-container");
 }
+import { dominioFun } from './mainController.js';
