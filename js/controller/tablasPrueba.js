@@ -7,18 +7,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 dataType: "json",
                 success: function (response) {
                     if (typeof response === 'object' && response !== null) {
-                        let detallesTabla = response.resultado.detallesTabla;
-                        detallesTabla.forEach(function (detalle, index) {
-                            let section = document.createElement('section');
-                            section.classList.add('section-hijo');
+                        console.log(detallesTabla);
+                        if (detallesTabla && Array.isArray(detallesTabla)) {
+                            detallesTabla.forEach(function (detalle, index) {
+                                let section = document.createElement('section');
+                                section.classList.add('section-hijo');
 
-                            let tabla = pintarTabla(detalle, index + 1, response.resultado.detallesTabla[index].CodPedido);
+                                let tabla = pintarTabla(detalle, index + 1, response.resultado.detallesTabla[index].CodPedido);
 
-                            section.appendChild(tabla);
+                                section.appendChild(tabla);
 
-                            document.getElementById('contenedor-tablas').appendChild(section);
+                                document.getElementById('contenedor-tablas').appendChild(section);
 
-                        });
+                            });
+                        } else {
+                            console.error("La variable 'detallesTabla' no tiene un valor válido.");
+                        }
                     }
                     // Botón para desplegar todas las tablas
                     let btnDesplegarTodo = document.createElement('button');
