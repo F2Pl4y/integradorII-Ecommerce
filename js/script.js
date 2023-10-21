@@ -24,9 +24,9 @@ if (window.location.pathname === "/index.html") {
    //    myOrders.classList.add('active');
    // }
 
-   document.querySelector('#close-orders').onclick = () => {
-      myOrders.classList.remove('active');
-   }
+   // document.querySelector('#close-orders').onclick = () => {
+   //    myOrders.classList.remove('active');
+   // }
 
    let cart = document.querySelector('.shopping-cart');
 
