@@ -1,4 +1,7 @@
 export let account = document.querySelector('.user-account');
+if (window.location.pathname === "/") {
+   window.location.href = '../index.html';
+}
 if (window.location.pathname === "/index.html") {
    let navbar = document.querySelector('.header .flex .navbar');
 
