@@ -5,9 +5,9 @@ if (window.location.pathname === "/") {
 if (window.location.pathname === "/index.html") {
    let navbar = document.querySelector('.header .flex .navbar');
 
-   document.querySelector('#menu-btn').onclick = () => {
-      navbar.classList.toggle('active');
-   }
+   // document.querySelector('#menu-btn').onclick = () => {
+   //    navbar.classList.toggle('active');
+   // }
 
 
    document.querySelector('#user-btn').onclick = () => {
