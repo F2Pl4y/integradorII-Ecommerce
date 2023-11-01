@@ -22,7 +22,7 @@ export function platilloSel(idCategoria = null) {
                     template += `<form action="" method="post">`;
                     template += `<input type="hidden" value="${valor["CodigoPlatillo"]}" min="1" max="100" value="1" class="qty inputCodigos" name="qty" />`;
                     template += `<input type="number" min="1" max="100" value="1" class="qty inputCarrito" name="qty" />`;
-                    template += `<input type="submit" value="add to cart" name="add_to_cart" class="btn btnAgregarPlatillo" />`;
+                    template += `<input type="submit" value="Agregar" name="add_to_cart" class="btn btnAgregarPlatillo" />`;
                     template += `</form>`;
                     template += `</div>`;
                     contenido += template;
