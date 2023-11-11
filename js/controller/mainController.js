@@ -1,7 +1,7 @@
 export function dominioFun() {
-    // return 'https://f3rn4nd021py.pythonanywhere.com/';
     return 'http://127.0.0.1:5000/';
 }
+// return 'https://f3rn4nd021py.pythonanywhere.com/';
 const expresiones = {
     nombreCargo: /^[\w,\s]{5,30}$/,
     dinero: /^\d+(.(\d{1,2})?)?$/,

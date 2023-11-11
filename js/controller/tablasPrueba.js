@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     isSessionValid()
         .then((resultado) => {
+
             $.ajax({
                 type: "GET",
                 url: `${dominioFun()}valoresFactura/${resultado.resultado[0]}/`,
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         let detallesTabla = response.resultado.detallesTabla;
                         if (detallesTabla && Array.isArray(detallesTabla)) {
                             detallesTabla.forEach(function (detalle, index) {
+                                // console.log("valor detalle:", detalle); muestra cada fila de producto
                                 let section = document.createElement('section');
                                 section.classList.add('section-hijo');
 
@@ -81,19 +83,58 @@ document.addEventListener('DOMContentLoaded', function () {
         section.classList.add('section-hijo');
 
         let btnGuardarPDF = document.createElement('button');
-        btnGuardarPDF.classList.add('btn', 'btn-success');
+        btnGuardarPDF.classList.add('btn', 'btn-success', 'btn-guardar-pdf');
         btnGuardarPDF.textContent = 'Descargar';
         btnGuardarPDF.id = `btnGuardarPDF-${index}`; // Asignar un id único al botón
+
+
+        btnGuardarPDF.setAttribute('data-function', 'descargarPDF'); // Agrega un atributo personalizado 'data-function'
+
+
+        // btnGuardarPDF.addEventListener('click', function () {
+        //     guardarPDF(codPedido, index);
+        // });
+
+
+        let btnAbrirModal = document.createElement('button');
+        btnAbrirModal.classList.add('btn', 'btn-primary', 'btn-abrir-modal');
+        btnAbrirModal.textContent = 'Califícanos';
+        btnAbrirModal.id = `btnAbrirModal-${index}`;
+        btnAbrirModal.setAttribute('data-function', 'abrirModal'); // Agrega un atributo personalizado 'data-function'
+
         btnGuardarPDF.addEventListener('click', function () {
-            guardarPDF(codPedido, index);
+            handleButtonClick('descargarPDF', codPedido, index);
         });
+
+        btnAbrirModal.addEventListener('click', function () {
+            handleButtonClick('abrirModal', codPedido, index);
+        });
+
+
+        // section.appendChild(btnGuardarPDF);
+
         section.appendChild(btnGuardarPDF);
+        section.appendChild(btnAbrirModal);
+
+
+
 
         let fila = `<tr>`;
         fila += `<td>${detalle.direccion}</td>`;
         fila += `<td>${detalle.fecha}</td>`;
         fila += `<td>${detalle.horarioPedido}</td>`;
-        fila += `<td>${detalle.estadoPedido}</td>`;
+        // fila += `<td>${detalle.estadoPedido}</td>`;
+        fila += `<td>${detalle.CodPedido}</td>`;
+
+
+        // fila += `<td->${detalle.CodPedido}</-td>`;
+        // fila += `<td>
+        //  <div class="btn-group">
+        //                     <button class="btn btn-primary" data-toggle="modal" data-target="#modalListPuntaje">
+        //                     <i class="bx bx-up-arrow-alt"></i>
+        //                     </button>
+        //                     </div>                            
+        // </td>`
         fila += `</tr>`;
         contenido += fila;
 
@@ -109,7 +150,10 @@ document.addEventListener('DOMContentLoaded', function () {
             `<th>Dirección</th>
         <th>Fecha</th>
         <th>Hora</th>
-        <th>Estado</th>`;
+        <th>Estado</th>
+        `
+            // <th>Acciones</th>
+            ;
         thead.appendChild(tr);
 
         let tbody = document.createElement('tbody');
@@ -125,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 guardarPDF(codPedido, index);
             });
         });
+
 
         let button = document.createElement('button');
         button.classList.add('btn', 'btn-info');
@@ -222,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 dataType: "json",
                 contentType: 'application/json',
                 success: function (response) {
-                    console.log(response);
+                    // console.log(response);
                     // Obtener los datos del objeto de respuesta
                     var apiData = response.resultado;
 
@@ -283,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         drawTable(montoTotalHeaders, montoTotalData, montoTotalX, montoTotalY, montoTotalWidth / montoTotalHeaders.length, lineHeight);
 
                         // Agregar el título del documento
-                        var title = "Paco's Bill";
+                        var title = "Mr Chiken";
                         doc.setFontSize(32);
                         doc.setFontStyle('bold');
                         doc.text(title, doc.internal.pageSize.getWidth() / 2, 30, { align: 'center' });
@@ -417,7 +462,185 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
     regresar();
+    function handleButtonClick(functionName, codPedido, index) {
+        if (functionName === 'descargarPDF') {
+            guardarPDF(codPedido, index);
+        } else if (functionName === 'abrirModal') {
+            // console.log("codPedido:", codPedido);
+            // console.log("val:", index);
+            // Aquí puedes agregar el código para abrir el modal
+            $('#modalListPuntaje').modal('show');
+            puntajeSel(codPedido);
+        }
+    }
+
+
+
+    // var puntaje = 0;
+
+
+    function puntajeSel(codPedido) {
+        // const ruta = `${dominioFun()}puntaje/sel/${codPedido}/`;
+        const ruta = `${dominioFun()}puntaje/seldp/${codPedido}/`;
+        $.ajax({
+            type: "GET",
+            url: ruta,
+            dataType: "json",
+            success: function (data) {
+                if (data["exito"]) {
+                    $('#tablaTrabajadores').empty();
+                    let tabla = '';
+                    $.each(data["resultado"], function (llave, valor) {
+                        const containerClass = 'stars-container';
+                        const mensajeClass = 'mensaje';
+
+                        let template = '<tr>';
+                        template += '<td>' + valor["NombrePlatillo"] + '</td>';
+                        template += '<td class="grupoBotones">';
+                        template += '<div class="btn-group">';
+                        template += `<div class="rating-box">
+                            <span>¿Qué te pareció el producto?</span>
+                            <div class="${containerClass}">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <div class="${mensajeClass}"></div>
+                            </div>
+                        </div>`;
+                        template += `<button class="btn btn-primary btn-puntaje" data-codigo-platillo="${valor.CodigoPlatillo}" data-codigo-pedido="${codPedido}" data-nombre-plato="${valor.NombrePlatillo}">
+                        <i class="bx bx-up-arrow-alt"></i>
+                    </button>`;
+                        template += '</div>';
+                        template += '</td>';
+                        template += '</tr>';
+                        tabla += template;
+                    });
+                    $('#tablaTrabajadores').html(tabla);
+                    // Llamar a la función insPuntaje después de cargar el contenido
+                    insPuntaje();
+                }
+            }
+        });
+    }
+
+
+    // Escuchar clics en el botón y obtener los valores de datos
+    $(document).on("click", ".btn-puntaje", function (event) {
+        // const codigoPlatillo = $(this).data("codigo-platillo");
+        // const codPedido = $(this).data("codigo-pedido");
+        // const nombrePlato = $(this).data("nombre-plato");
+        var codigoPlatillo = $(this).data("codigo-platillo");
+        var codPedido = $(this).data("codigo-pedido");
+        var nombrePlato = $(this).data("nombre-plato");
+
+        // Obtener la cantidad de estrellas activas en el mismo contenedor
+        // const starsContainer = $(this).closest(".grupoBotones").find(".stars-container");
+        var starsContainer = $(this).closest(".grupoBotones").find(".stars-container");
+        var puntaje = starsContainer.find('.fa-star.active').length;
+
+        // Mostrar los valores y la cantidad de estrellas en la consola
+        console.log("btn-codPlato: ", codigoPlatillo);
+        console.log("btn-codPedido: ", codPedido);
+        console.log("btn-nombrePlato: ", nombrePlato);
+        console.log("btn-Cantidad de estrellas: ", puntaje);
+
+
+        // Si deseas realizar más acciones o actualizar el puntaje aquí, puedes hacerlo
+        puntajeIns(codigoPlatillo, codPedido, nombrePlato, puntaje);
+    });
+
+
+    function insPuntaje() {
+        // Escuchar clics en las estrellas y actualizar puntaje
+        $(document).on("click", ".fa-star", function () {
+            const starsContainer = $(this).closest(".stars-container");
+            const stars = starsContainer.find('.fa-star');
+            const mensajeElement = starsContainer.find('.mensaje');
+            const puntaje = stars.index(this) + 1;
+
+            stars.removeClass("active");
+            stars.slice(0, puntaje).addClass("active");
+
+            const mensajesArray = [
+                "¡Terrible!",
+                "¡Malo!",
+                "¡Regular!",
+                "¡Bueno!",
+                "¡Excelente!",
+                "¡Terrible!"
+            ];
+            mensajeElement.text(mensajesArray[puntaje - 1]);
+
+            // Actualiza el puntaje en el botón
+            const button = starsContainer.closest(".grupoBotones").find(".btn-puntaje");
+            button.data("puntaje", puntaje);
+        });
+    }
+
+
+    function puntajeIns(codigoPlatillo, codPedido, nombrePlato, puntaje) {
+        const registroscargo = new FormData();
+
+        registroscargo.append('codPlato', codigoPlatillo);
+        registroscargo.append('codPedido', codPedido);
+        registroscargo.append('nombrePlato', nombrePlato);
+        registroscargo.append('puntaje', puntaje);
+
+
+        // console.log("paso los append");
+
+
+        $.ajax({
+            type: "POST",
+            // url: `${dominioFun()}puntaje/ins/`,
+            url: `${dominioFun()}puntaje/insdp/`,
+            data: registroscargo,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data["mensaje"]);
+                console.log("------------------------");
+                // mensajeValidacion(data["mensaje"], data["exito"]);
+                // if (data["exito"]) {
+                //     ocultarModal();
+                //     cargoSel();
+                // }
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+
 });
+
+
+function ocultarModal() {
+    $('#modalListPuntaje').modal('hide');
+}
+
+function efectoModalAlDesaparecer() {
+    $('#modalListPuntaje').on('hide.bs.modal', function (e) {
+        const txtPassword = document.getElementById('txtPassword');
+        const txtPasswordRepetir = document.getElementById('txtPasswordRepetir');
+        const lblPassword = document.getElementById('lblPassword');
+        const lblPasswordRepetir = document.getElementById('lblPasswordRepetir');
+        lblPassword.style.display = "block";
+        lblPasswordRepetir.style.display = "block";
+        txtPassword.style.display = "block";
+        txtPasswordRepetir.style.display = "block";
+        limpiarCampoFormularioTrabajador();
+    });
+}
+
 
 import { dominioFun } from './mainController.js';
 import { isSessionValid } from './validadorCli.js';
